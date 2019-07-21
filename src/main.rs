@@ -17,9 +17,9 @@ const VERSION: &str = "0.1";
 
 fn print_version() {
     print!(r#"prettyjson {}
-
 Copyright (C) 2019 Hatter Jiang.
 License MIT <https://opensource.org/licenses/MIT>
+
 Written by Hatter Jiang
 "#, VERSION);
 }
