@@ -1,8 +1,7 @@
 extern crate argparse;
 extern crate term;
 extern crate json;
-
-mod util;
+extern crate rust_util;
 
 use std::{
     fs::File,
@@ -12,7 +11,7 @@ use std::{
     }
 };
 use argparse::{ArgumentParser, StoreTrue, Store};
-use util::*;
+use rust_util::*;
 
 const VERSION: &str = "0.1";
 
