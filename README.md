@@ -1,7 +1,14 @@
-# prettyjson
+## prettyjson
 prettyjson - command line JSON format tool.
 
 
+#### Install
+```
+cargo install --git https://github.com/jht5945/prettyjson
+```
+
+
+#### Usage
 ```
 $ prettyjson --help
 Usage:
