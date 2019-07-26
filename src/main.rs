@@ -30,34 +30,42 @@ fn read_to_string(read: &mut Read) -> XResult<String> {
     Ok(buffer)
 }
 
+struct Options {
+    version: bool,
+    tab_width: u16,
+    file: String,
+}
+
 fn main() {
-    let mut version = false;
-    let mut tab_width = 4u16;
-    let mut file = String::new();
+    let mut options = Options {
+        version: false,
+        tab_width: 4u16,
+        file: String::new(),
+    };
     {
         let mut ap = ArgumentParser::new();
         ap.set_description("prettyjson - command line JSON pretty tool.");
-        ap.refer(&mut tab_width).add_option(&["-w", "--tab-width"], Store, "Tab width, default 4");
-        ap.refer(&mut version).add_option(&["-v", "--version"], StoreTrue, "Print version");
-        ap.refer(&mut file).add_argument("FILE", Store, "FILE");
+        ap.refer(&mut options.tab_width).add_option(&["-w", "--tab-width"], Store, "Tab width, default 4");
+        ap.refer(&mut options.version).add_option(&["-v", "--version"], StoreTrue, "Print version");
+        ap.refer(&mut options.file).add_argument("FILE", Store, "FILE");
         ap.parse_args_or_exit();
     }
     
-    if version {
+    if options.version {
         print_version();
         return;
     }
 
-    if tab_width > 100 {
-        print_message(MessageType::ERROR, &format!("Tab width is invalid: {}", tab_width));
+    if options.tab_width > 100 {
+        print_message(MessageType::ERROR, &format!("Tab width is invalid: {}", options.tab_width));
         return;
     }
 
-    let read: XResult<String> = match file.len() {
+    let read: XResult<String> = match options.file.len() {
         0 => read_to_string(&mut io::stdin()),
-        _ => match File::open(&file) {
+        _ => match File::open(&options.file) {
             Err(err) => {
-                print_message(MessageType::ERROR, &format!("Open file: {}, failed: {}", &file, err));
+                print_message(MessageType::ERROR, &format!("Open file: {}, failed: {}", &options.file, err));
                 return;
             },
             Ok(mut f) => read_to_string(&mut f),
@@ -78,5 +86,5 @@ fn main() {
         },
     };
 
-    println!("{}", json::stringify_pretty(json_object, tab_width));
+    println!("{}", json::stringify_pretty(json_object, options.tab_width));
 }
