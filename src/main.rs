@@ -4,7 +4,7 @@ extern crate json;
 extern crate rust_util;
 
 use std::{
-    fs::File,
+    fs::{self, File},
     io::{
         self,
         prelude::*,
@@ -32,6 +32,7 @@ fn read_to_string(read: &mut Read) -> XResult<String> {
 
 struct Options {
     version: bool,
+    replace_file: bool,
     tab_width: u16,
     file: String,
 }
@@ -39,6 +40,7 @@ struct Options {
 fn main() {
     let mut options = Options {
         version: false,
+        replace_file: false,
         tab_width: 4u16,
         file: String::new(),
     };
@@ -47,6 +49,7 @@ fn main() {
         ap.set_description("prettyjson - command line JSON pretty tool.");
         ap.refer(&mut options.tab_width).add_option(&["-w", "--tab-width"], Store, "Tab width, default 4");
         ap.refer(&mut options.version).add_option(&["-v", "--version"], StoreTrue, "Print version");
+        ap.refer(&mut options.replace_file).add_option(&["-R", "--replace-file"], StoreTrue, "Replace file");
         ap.refer(&mut options.file).add_argument("FILE", Store, "FILE");
         ap.parse_args_or_exit();
     }
@@ -86,5 +89,17 @@ fn main() {
         },
     };
 
-    println!("{}", json::stringify_pretty(json_object, options.tab_width));
+    let pretty_json = json::stringify_pretty(json_object, options.tab_width);
+    println!("{}", pretty_json);
+
+    if options.file.len() > 0 && options.replace_file {
+        match fs::write(&options.file, pretty_json) {
+            Err(err) => {
+                print_message(MessageType::ERROR, &format!("Write JSON file failed: {}", err));
+            },
+            Ok(_) => {
+                print_message(MessageType::OK, "Write JSON file success.");
+            },
+        }
+    }
 }
