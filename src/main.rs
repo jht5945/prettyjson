@@ -13,7 +13,7 @@ use std::{
 use argparse::{ArgumentParser, StoreTrue, Store};
 use rust_util::*;
 
-const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn print_version() {
     print!(r#"prettyjson {}
