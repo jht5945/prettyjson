@@ -14,14 +14,15 @@ use argparse::{ArgumentParser, StoreTrue, Store};
 use rust_util::*;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
+const GIT_HASH: &str = env!("GIT_HASH");
 
 fn print_version() {
-    print!(r#"prettyjson {}
+    print!(r#"prettyjson {} - {}
 Copyright (C) 2019 Hatter Jiang.
 License MIT <https://opensource.org/licenses/MIT>
 
 Written by Hatter Jiang
-"#, VERSION);
+"#, VERSION, &GIT_HASH[0..7]);
 }
 
 fn read_to_string(read: &mut Read) -> XResult<String> {
