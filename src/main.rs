@@ -83,7 +83,7 @@ fn main() {
         },
         Ok(content) => match json::parse(&content) {
             Err(err) => {
-                print_message(MessageType::ERROR, &format!("Parse JSON pailed: {}", err));
+                print_message(MessageType::ERROR, &format!("Parse JSON failed: {}", err));
                 return;
             },
             Ok(json_object) => json_object,
