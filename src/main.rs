@@ -11,7 +11,10 @@ use std::{
     }
 };
 use argparse::{ArgumentParser, StoreTrue, Store};
-use rust_util::*;
+use rust_util::{
+    XResult,
+    util_msg::*,
+};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const GIT_HASH: &str = env!("GIT_HASH");
