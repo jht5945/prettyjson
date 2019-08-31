@@ -28,7 +28,7 @@ Written by Hatter Jiang
 "#, VERSION, &GIT_HASH[0..7]);
 }
 
-fn read_to_string(read: &mut Read) -> XResult<String> {
+fn read_to_string(read: &mut dyn Read) -> XResult<String> {
     let mut buffer = String::new();
     read.read_to_string(&mut buffer)?;
     Ok(buffer)
@@ -36,6 +36,7 @@ fn read_to_string(read: &mut Read) -> XResult<String> {
 
 struct Options {
     version: bool,
+    verbose: bool,
     replace_file: bool,
     tab_width: u16,
     file: String,
@@ -44,6 +45,7 @@ struct Options {
 fn main() {
     let mut options = Options {
         version: false,
+        verbose: false,
         replace_file: false,
         tab_width: 4u16,
         file: String::new(),
@@ -52,10 +54,15 @@ fn main() {
         let mut ap = ArgumentParser::new();
         ap.set_description("prettyjson - command line JSON pretty tool.");
         ap.refer(&mut options.tab_width).add_option(&["-w", "--tab-width"], Store, "Tab width, default 4");
-        ap.refer(&mut options.version).add_option(&["-v", "--version"], StoreTrue, "Print version");
+        ap.refer(&mut options.version).add_option(&["-V", "--version"], StoreTrue, "Print version");
+        ap.refer(&mut options.verbose).add_option(&["-v", "--verbose"], StoreTrue, "Verbose");
         ap.refer(&mut options.replace_file).add_option(&["-R", "--replace-file"], StoreTrue, "Replace file");
         ap.refer(&mut options.file).add_argument("FILE", Store, "FILE");
         ap.parse_args_or_exit();
+    }
+
+    if options.verbose {
+        print_message(MessageType::DEBUG, &format!("prettyjson version: {}, git hash: {}", VERSION, GIT_HASH));
     }
     
     if options.version {
