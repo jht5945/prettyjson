@@ -7,14 +7,12 @@ mod opt;
 
 use std::{
     fs::{self, File},
-    io::{
-        self,
-        prelude::*,
-    }
+    io::{self}
 };
 use rust_util::{
     XResult,
     util_msg::*,
+    util_io::*,
 };
 use opt::*;
 
@@ -28,12 +26,6 @@ License MIT <https://opensource.org/licenses/MIT>
 
 Written by Hatter Jiang
 "#, VERSION, &GIT_HASH[0..7]);
-}
-
-fn read_to_string(read: &mut dyn Read) -> XResult<String> {
-    let mut buffer = String::new();
-    read.read_to_string(&mut buffer)?;
-    Ok(buffer)
 }
 
 
