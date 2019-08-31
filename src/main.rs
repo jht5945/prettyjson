@@ -3,6 +3,8 @@ extern crate term;
 extern crate json;
 extern crate rust_util;
 
+mod opt;
+
 use std::{
     fs::{self, File},
     io::{
@@ -10,11 +12,11 @@ use std::{
         prelude::*,
     }
 };
-use argparse::{ArgumentParser, StoreTrue, Store};
 use rust_util::{
     XResult,
     util_msg::*,
 };
+use opt::*;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const GIT_HASH: &str = env!("GIT_HASH");
@@ -34,36 +36,6 @@ fn read_to_string(read: &mut dyn Read) -> XResult<String> {
     Ok(buffer)
 }
 
-struct Options {
-    version: bool,
-    verbose: bool,
-    replace_file: bool,
-    tab_width: u16,
-    file: String,
-}
-
-impl Options {
-    pub fn new() -> Options {
-        Options {
-            version: false,
-            verbose: false,
-            replace_file: false,
-            tab_width: 4u16,
-            file: String::new(),
-        }
-    }
-
-    pub fn parse_args(&mut self) {
-        let mut ap = ArgumentParser::new();
-        ap.set_description("prettyjson - command line JSON pretty tool.");
-        ap.refer(&mut self.tab_width).add_option(&["-w", "--tab-width"], Store, "Tab width, default 4");
-        ap.refer(&mut self.version).add_option(&["-V", "--version"], StoreTrue, "Print version");
-        ap.refer(&mut self.verbose).add_option(&["-v", "--verbose"], StoreTrue, "Verbose");
-        ap.refer(&mut self.replace_file).add_option(&["-R", "--replace-file"], StoreTrue, "Replace file");
-        ap.refer(&mut self.file).add_argument("FILE", Store, "FILE");
-        ap.parse_args_or_exit();
-    }
-}
 
 fn main() {
     let mut options = Options::new();
