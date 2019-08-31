@@ -16,16 +16,17 @@ use rust_util::{
 };
 use opt::*;
 
+const NAME: &str = env!("CARGO_PKG_NAME");
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const GIT_HASH: &str = env!("GIT_HASH");
 
 fn print_version() {
-    print!(r#"prettyjson {} - {}
+    print!(r#"{} {} - {}
 Copyright (C) 2019 Hatter Jiang.
 License MIT <https://opensource.org/licenses/MIT>
 
 Written by Hatter Jiang
-"#, VERSION, &GIT_HASH[0..7]);
+"#, NAME, VERSION, &GIT_HASH[0..7]);
 }
 
 
@@ -34,7 +35,7 @@ fn main() {
     options.parse_args();
     
     if options.verbose {
-        print_message(MessageType::DEBUG, &format!("prettyjson version: {}, git hash: {}", VERSION, GIT_HASH));
+        print_message(MessageType::DEBUG, &format!("{} version: {}, git hash: {}", NAME, VERSION, GIT_HASH));
     }
     
     if options.version {
