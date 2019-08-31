@@ -20,6 +20,12 @@ impl Options {
         }
     }
 
+    pub fn parse_args_static() -> Options {
+        let mut opt = Options::new();
+        opt.parse_args();
+        opt
+    }
+
     pub fn parse_args(&mut self) {
         let mut ap = ArgumentParser::new();
         ap.set_description("prettyjson - command line JSON pretty tool.");

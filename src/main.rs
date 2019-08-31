@@ -31,8 +31,7 @@ Written by Hatter Jiang
 
 
 fn main() {
-    let mut options = Options::new();
-    options.parse_args();
+    let options = Options::parse_args_static();
     
     if options.verbose {
         print_message(MessageType::DEBUG, &format!("{} version: {}, git hash: {}", NAME, VERSION, GIT_HASH));
