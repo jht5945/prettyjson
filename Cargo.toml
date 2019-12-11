@@ -3,6 +3,7 @@ name = "prettyjson"
 version = "0.1.1"
 authors = ["Hatter Jiang <jht5945@gmail.com>"]
 edition = "2018"
+readme = "README.md"
 description = "PrettyJSON"
 license = "MIT"
 
