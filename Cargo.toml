@@ -5,6 +5,7 @@ authors = ["Hatter Jiang <jht5945@gmail.com>"]
 edition = "2018"
 readme = "README.md"
 description = "PrettyJSON"
+repository = "https://github.com/jht5945/prettyjson"
 license = "MIT"
 
 [dependencies]
