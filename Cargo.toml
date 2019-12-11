@@ -3,9 +3,11 @@ name = "prettyjson"
 version = "0.1.1"
 authors = ["Hatter Jiang <jht5945@gmail.com>"]
 edition = "2018"
+description = "PrettyJSON"
+license = "MIT"
 
 [dependencies]
 argparse = "0.2.2"
 json = "0.11.14"
 term = "0.5.2"
-rust_util = { git = "https://github.com/jht5945/rust_util" }
+rust_util = "0.1.0"
